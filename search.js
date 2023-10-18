@@ -1,13 +1,30 @@
-$(document).ready(function () {
-  search();
-  $("#selSigunguArea").append("<option id=selSigunguArea" + " value=" + "" + ">" + "지역을 선택해주세요" + "</option>");
-  //	fnSetData(1);
 
-  areaList();
-  createSelectAreaList();
-  $("#sidoAreaCd").on('change', function () {
-    createSelectSggList($("#sidoAreaCd").val());
-  });
+document.addEventListener("DOMContentLoaded", function() {
+      var realContents = document.querySelector("#real_contents");
+
+      // MutationObserver 생성
+      var observer = new MutationObserver(function(mutationsList) {
+        for (var mutation of mutationsList) {
+          if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+            // #real_contents가 추가되었을 때 실행될 코드
+            // 여기에 실행하고자 하는 코드 작성
+            search();
+            $("#selSigunguArea").append("<option id=selSigunguArea" + " value=" + "" + ">" + "지역을 선택해주세요" + "</option>");
+            //	fnSetData(1);
+          
+            areaList();
+            createSelectAreaList();
+            $("#sidoAreaCd").on('change', function () {
+              createSelectSggList($("#sidoAreaCd").val());
+            });
+            // 옵저버 해제 (필요한 경우)
+            observer.disconnect();
+          }
+        }
+      });
+
+      // 옵저버 설정 및 시작
+      observer.observe(document.body, { childList: true, subtree: true });
 });
 
 const areaList = () => {
